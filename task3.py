@@ -74,7 +74,7 @@ turtle.goto(0,-350)
 turtle.pendown()
 turtle.circle(350)
 turtle.penup()
-turtle.goto(345,0)
+turtle.goto(0,0)
 turtle.pendown()
 i = 0
 
@@ -84,7 +84,7 @@ turtle.speed(0)
 while RUNNING:
     
     i+=1
-    # direct = np.random.random_sample()* 2 * math.pi
+
     direct = (np.random.random_sample()*4//1)*math.pi*0.5
     dist = 1.75 * (np.random.random_sample()//(1/3))
     x1,y1 = x2+dist*math.cos(direct),y2+dist*math.sin(direct)
@@ -101,5 +101,4 @@ while RUNNING:
     if i == 10000:
         break
     x2,y2 = x1,y1
-
     
