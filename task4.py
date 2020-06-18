@@ -46,6 +46,8 @@ avg = summation/10000
 
 print(avg)
 
-plt.plot(lst)
+x = np.arange(1,10000) 
+
+plt.plot(x lst)
 
 plt.show()
