@@ -38,13 +38,12 @@ def Boundary_Handle(x1,x2,y1,y2):
     turtle.setpos(x,y)
     print(x,y)
     dist = 1.75 * (np.random.random_sample()//(1/3))
-    if math.sqrt((x+dist*math.cos(math.pi-2*angle))**2 + (y+dist*math.sin(math.pi-2*angle))**2) > 350:
+    if math.sqrt((x+dist*math.cos(math.pi-2*angle))**2 + (y+dist*math.sin(math.pi-2*angle))**2) >= 350:
         Boundary_Handle(x+dist*math.cos(math.pi-2*angle),x,y+dist*math.sin(math.pi-2*angle),y)
     else:
         move(dist,turn=(math.pi-2*angle)*180/math.pi)
         x2,y2 = turtle.position()
-    # if math.sqrt(x2**2+y2**2) > 350:
-    #     turtle.penup()
+
     print(turtle.position(),math.sqrt(x2**2+y2**2))
 
 def close_to_circle(t1,t2,s1,s2):
@@ -65,7 +64,7 @@ def close_to_circle(t1,t2,s1,s2):
 turtle.shape("circle")
 turtle.resizemode("user")
 turtle.shapesize(0.2,0.2,1)
-# circle = turtle.Turtle()
+turtle.speed(0)
 canvas = turtle.getcanvas()  # or, equivalently: turtle.getcanvas()
 root = canvas.winfo_toplevel()
 
@@ -82,24 +81,21 @@ turtle.goto(0,-350)
 turtle.pendown()
 turtle.circle(350)
 turtle.penup()
-turtle.goto(345,0)
+turtle.goto(0,0)
 turtle.pendown()
 # turtle.ht()
 i = 0
 
 
-x2,y2 = 345,0
-turtle.speed(10)
+x2,y2 = 0,0
 while RUNNING:
     
     i+=1
-    # direct = np.random.random_sample()* 2 * math.pi
+
     direct = (np.random.random_sample()*4//1)*math.pi*0.5
     dist = 1.75 * (np.random.random_sample()//(1/3))
     x1,y1 = x2+dist*math.cos(direct),y2+dist*math.sin(direct)
-    # print(direct*180/math.pi)
-    
-    # print(math.sqrt(x1**2 + y1**2))
+
     print(turtle.position(),math.sqrt(x2**2+y2**2))
     if math.sqrt((x2-x1)**2 + (y2-y1)**2)<0:
         continue
@@ -113,8 +109,6 @@ while RUNNING:
     if i == 10000:
         break
     x2,y2 = x1,y1
-    # print(i)
-
     
 
 turtle.exitonclick()
