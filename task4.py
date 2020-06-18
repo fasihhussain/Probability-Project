@@ -46,8 +46,24 @@ avg = summation/10000
 
 print(avg)
 
-x = np.arange(1,10000) 
+lst = list()
+val = 0
+summation = 0
+for i in range(1000):
+    val = task1(1000, ["move left", "no move", "move right"])
+    lst.append(val)
+    summation += val
 
-plt.plot(x lst)
+avg = summation/1000
 
-plt.show()
+print(avg)
+
+lst = sorted(lst)
+
+fit = stats.norm.pdf(lst, np.mean(lst), np.std(lst))  #this is a fitting indeed
+
+pl.plot(lst,fit,'-o')
+
+pl.hist(lst,normed=True)      #use this to draw histogram of your data
+
+pl.show()

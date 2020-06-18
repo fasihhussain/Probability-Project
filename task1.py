@@ -1,5 +1,7 @@
 from matplotlib import pyplot as plt
 import numpy as np
+import scipy.stats as stats
+import pylab as pl
 import turtle
 import math
 
@@ -37,20 +39,21 @@ def task1(n, p):
 lst = list()
 val = 0
 summation = 0
-for i in range(10000):
-    val = task1(10000, ["move left", "no move", "move right"])
+for i in range(1000):
+    val = task1(1000, ["move left", "no move", "move right"])
     lst.append(val)
     summation += val
 
-avg = summation/10000
+avg = summation/1000
 
 print(avg)
 
-x = np.arange(1,10000) 
+lst = sorted(lst)
 
-plt.plot(x lst)
+fit = stats.norm.pdf(lst, np.mean(lst), np.std(lst))  #this is a fitting indeed
 
+pl.plot(lst,fit,'-o')
 
-plt.plot(lst)
+pl.hist(lst,normed=True)      #use this to draw histogram of your data
 
-plt.show()
+pl.show()
