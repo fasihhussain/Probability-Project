@@ -66,7 +66,7 @@
 \begin{solution}
     Building on task 1, to compute the expected time required we initialize two nodes, one at point $x$ while other one at point $0$, and update their positions according to given probabilities. Updating in this, the distance between the nodes keeps on increasing in many cases and they don't converge. Instead if reinitialize the node if they are at a distance of more then $2x$ from each other than it gives them room to move away as well but makes sure that they converge at point. Figure \ref{fig:task2} shows the mean time for the node to converge over a range of values of $x$ (1000 runs each) and the trends can be fitted to a polynomial function. Following is the function for the expected value obtained using fitting a quadratic function in our data:
     \[E[X=x]=0.7769x^2+0.9367x+0.6088\]
-    This function is based on our assumption that the expected time would be a second order polynomial based on it's trends as shown in \ref{fig:task2}.
+    This function is based on our assumption that the expected time would be a second order polynomial based on it's trends as shown in figure \ref{fig:task2}.
 \end{solution}
 
 \subsection {Task 3}
@@ -108,8 +108,8 @@
 
 \subsection {Task 8}
 \begin{solution}
-    Building on task 5, two points are distributed randomly in the circular region by random selection of angles between 0 and 2$\pi$. The distance from the center is also calculated at random. But as this distribution does not give uniformity, the a random number between 0 and 1 is chosen and is square rooted to make it a grow slower as the number reaches 1 and then is multiplied with the radius of the circle to give a uniform distribution of points around the circle. Details about the algorithm can be found \href{https://blogs.sas.com/content/iml/2016/03/30/generate-uniform-2d-ball.html}{here}.\\\\
-    The two uniformly distributed points are then allowed to perform a random walk of similar to that of Task 5, but the experiment ends when the two points are within 1 unit radius of each other. The expected time taken for the two dots to come this close depends on their starting point. If the distance between the two points is more than the radius of the circle, it takes almost infinite amount of steps for them to reach close to each other. However, when the distance is minimal it takes even steps in hundreds for them to meet. We set a limit of 1 million steps for a breakpoint where we restart the experiment. In the results obtained, we can clearly say that expectation rises exponentially with increase in radius.
+    Building on task 5, two nodes are distributed randomly in the circular region by random selection of angles between 0 and 2$\pi$. The distance from the center is also calculated at random. But as this distribution does not give uniformity, then a random number between 0 and 1 is chosen and is square rooted to make it a grow slower as the number reaches 1 and then is multiplied with the radius of the circle to give a uniform distribution of nodes around the circle. Details about the algorithm can be found \href{https://blogs.sas.com/content/iml/2016/03/30/generate-uniform-2d-ball.html}{\emph{here}}.\\\\
+    The two uniformly distributed nodes are then allowed to perform a random walk of similar to that of Task 5, but the experiment ends when the two nodes are within 1 unit radius of each other. The expected time taken for the two nodes to come this close depends on their starting point. If the distance between the two nodes is more than the radius of the circle, it takes almost infinite amount of steps for them to reach close to each other. However, when the distance is minimal it takes even steps in hundreds for them to meet. We set a limit of 1 million steps for a breakpoint where we restart the experiment. In the results obtained, we can clearly say that expectation rises exponentially with increase in radius.
     \[E[X] = ae^{br} \]
 \end{solution}
 
@@ -207,7 +207,7 @@
     \end{figure}
 
 \section{GitHub Repository}
-Please refer to our \href{https://github.com/FasihHussain22/Probability-Project/tree/master}{GitHub repository} for simulation codes
+Please refer to our \href{https://github.com/FasihHussain22/Probability-Project/tree/master}{\emph{GitHub repository}} for simulation codes
 
 \section{References}
 \begin{itemize}
