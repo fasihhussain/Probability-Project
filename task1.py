@@ -5,7 +5,7 @@ import math
 turtle.shape("circle")
 turtle.resizemode("user")
 turtle.shapesize(0.2,0.2,1)
-turtle.speed(10)
+turtle.speed(0)
 canvas = turtle.getcanvas()  # or, equivalently: turtle.getcanvas()
 root = canvas.winfo_toplevel()
 
@@ -31,6 +31,6 @@ def task1(n, p):
         print(dist)
         turtle.forward(dist)
         i+=1 
-    return sum(np.random.choice([-1, 0, 1], n, p=p))
+    return turtle.pos()[0]
 
-task1(10000,["move left", "no move", "move right"])
+print(task1(10000,[1/3,1/3,1/3]))

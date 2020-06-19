@@ -17,9 +17,9 @@ def Boundary_Handle(turtle,x1,x2,y1,y2, direct, dist):
     dx = x2 - x1
     dy = y2 - y1
     dr = math.sqrt(dx**2 + dy**2)
-    if dr<=0:
-        return
     D = x1*y2 - x2*y1
+    if dr <= 0:
+        return
     print("Boundary")
     print("x1,x2,y1,y2",x1,x2,y1,y2)
     print("detr =",(350**2) * (dr**2) - D**2)
@@ -136,9 +136,9 @@ while RUNNING:
     t1_x1, t1_y1 = t1_x2 + dist1*math.cos(direct1), t1_y2 + dist1*math.sin(direct1)
     t2_x1, t2_y1 = t2_x2 + dist2*math.cos(direct2), t2_y2 + dist2*math.sin(direct2)
 
-    if math.sqrt((t1_x2 - t1_x1)**2 + (t1_y2 - t1_y1)**2) < 0:
+    if math.sqrt((t1_x2 - t1_x1)**2 + (t1_y2 - t1_y1)**2) == 0:
         continue
-    if math.sqrt((t2_x2 - t2_x1)**2 + (t2_y2 - t2_y1)**2) < 0:
+    if math.sqrt((t2_x2 - t2_x1)**2 + (t2_y2 - t2_y1)**2) == 0:
         continue
 
     if math.sqrt(t1_x1**2 + t1_y1**2) >= 350:

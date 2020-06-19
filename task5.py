@@ -28,6 +28,11 @@ def Boundary_Handle(x1,x2,y1,y2):
     if (x,y) == (x2,y2):         
         dist = 1.75 * (np.random.random_sample()//(1/3))
         move(dist,turn=(math.pi-direct)*180/math.pi)
+        s = math.sqrt(turtle.position()[0]**2 + turtle.position()[1]**2)
+        print(s)
+        if s>=350:
+            return
+        return
     vec_to = (x-x2,y-y2)
     angle = math.acos((vec_to[0]*x+vec_to[1]*y)/(math.sqrt(vec_to[0]**2+vec_to[1]**2)*math.sqrt(x**2+y**2)))
     turtle.seth(direct*180/math.pi)
@@ -84,8 +89,8 @@ while RUNNING:
     
     i+=1
 
-    direct = (np.random.random_sample()*4//1)*math.pi*0.5
-    dist = 1.75 * (np.random.random_sample()//(1/3))
+    direct = 2 * math.pi * np.random.random_sample()
+    dist = 3.5 * np.random.random_sample()
     x1,y1 = x2+dist*math.cos(direct),y2+dist*math.sin(direct)
     
     if math.sqrt((x2-x1)**2 + (y2-y1)**2)==0:
@@ -97,6 +102,8 @@ while RUNNING:
         
     turtle.seth(direct*180/math.pi)
     turtle.forward(dist)
+    if i % 500 == 0:
+        print(i)
     if i == 1000:
         break
     x2,y2 = x1,y1
