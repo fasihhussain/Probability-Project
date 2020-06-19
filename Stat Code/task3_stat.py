@@ -1,7 +1,7 @@
-from matplotlib import pyplot as plt
+# from matplotlib import pyplot as plt
 import numpy as np
-import scipy.stats as stats
-import pylab as pl
+# import scipy.stats as stats
+# import pylab as pl
 import math
 
 
@@ -64,7 +64,7 @@ def task3_stat(n):
     i=0
 
     while i<n:
-
+        # print(i)
         direct1 = (np.random.random_sample()*4//1)*math.pi*0.5
         dist1 = 1.75 * (np.random.random_sample()//(1/3))
 
@@ -78,24 +78,27 @@ def task3_stat(n):
             t1_x2, t1_y2 = t1_x1, t1_y1
             continue
         
+        face = direct1
+        t1_x2 ,t1_y2 = t1_x1, t1_y1
+        
         i+=1
 
     return math.sqrt(t1_x2**2 + t1_y2**2)
 
 lst= list()
 for i in range(10000):
-    lst.append (task3_stat(1000))
+    val = task3_stat(1000)
+    lst.append(val)
 
+# lst = sorted(lst)
 
-lst = sorted(lst)
+# fit = stats.norm.pdf(lst, np.mean(lst), np.std(lst))  #this is a fitting indeed
 
-fit = stats.norm.pdf(lst, np.mean(lst), np.std(lst))  #this is a fitting indeed
+# pl.plot(lst,fit,'-o')
 
-pl.plot(lst,fit,'-o')
+# pl.hist(lst,normed=True)      #use this to draw histogram of your data
 
-pl.hist(lst,normed=True)      #use this to draw histogram of your data
-
-pl.show()
+# pl.show()
 
 ans="\n".join(lst)
 output_file = open("task3.txt", "w")

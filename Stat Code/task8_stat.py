@@ -1,7 +1,7 @@
-from matplotlib import pyplot as plt
+# from matplotlib import pyplot as plt
 import numpy as np
-import scipy.stats as stats
-import pylab as pl
+# import scipy.stats as stats
+# import pylab as pl
 import math
 
 def pm(x,y):
@@ -12,8 +12,12 @@ def Boundary_Handle(x1,x2,y1,y2, direct, dist,face):
     dy = y2 - y1
     dr = math.sqrt(dx**2 + dy**2)
     D = x1*y2 - x2*y1
-    if dr <= 0:
-        return
+    if dr == 0:
+        return x2,y2,face
+    if math.sqrt(x2**2+y2**2) > 350:
+        x2,y2 = x2+dist*math.cos(math.pi - face),y2+ dist*(math.pi - face)
+        face = math.pi-face
+        return x2, y2, face
     _x, x_= tuple(w/dr**2 for w in pm(D*dy,(-1 if dy < 0 else 1)*dx*(math.sqrt((350**2) * (dr**2) - D**2))))
     _y, y_= tuple(w/dr**2 for w in pm(-D*dx, abs(dy)*(math.sqrt((350**2) * (dr**2) - D**2))))
     x,y = close_to_circle(_x,x_,_y,y_, x2, y2)
@@ -75,7 +79,7 @@ def task8_stat():
 
     i=0
 
-    while abs(math.sqrt((t1_x2 - t2_x2)**2 + (t1_y2 - t2_y2)**2)) > 3.5:
+    while abs(math.sqrt((t1_x2 - t2_x2)**2 + (t1_y2 - t2_y2)**2)) > 3.5 and i<1000000:
 
         direct1 = np.random.random_sample()*2*math.pi
         direct2 = np.random.random_sample()*2*math.pi
@@ -86,24 +90,43 @@ def task8_stat():
         t1_x1, t1_y1 = t1_x2 + dist1*math.cos(direct1), t1_y2 + dist1*math.sin(direct1)
         t2_x1, t2_y1 = t2_x2 + dist2*math.cos(direct2), t2_y2 + dist2*math.sin(direct2)
 
-        if math.sqrt((t1_x2 - t1_x1)**2 + (t1_y2 - t1_y1)**2) == 0:
-            continue
-        if math.sqrt((t2_x2 - t2_x1)**2 + (t2_y2 - t2_y1)**2) == 0:
-            continue
+        b1 = False
+        b2 = False
 
-        if math.sqrt(t1_x1**2 + t1_y1**2) >= 350:
+        if math.sqrt((t1_x2 - t1_x1)**2 + (t1_y2 - t1_y1)**2) == 0:
+            b1 = True 
+        if math.sqrt((t2_x2 - t2_x1)**2 + (t2_y2 - t2_y1)**2) == 0:
+            b2 = True
+
+        if math.sqrt(t1_x1**2 + t1_y1**2) >= 350 and not b1:
             t1_x1, t1_y1, face1 = Boundary_Handle(t1_x1, t1_x2, t1_y1, t1_y2, direct1, dist1, face1)
             t1_x2, t1_y2 = t1_x1, t1_y1
-            continue
-        if math.sqrt(t2_x1**2 + t2_y1**2) >= 350:
+            b1 = True
+        if math.sqrt(t2_x1**2 + t2_y1**2) >= 350 and not b2:
             t2_x1, t2_y1, face2 = Boundary_Handle(t2_x1, t2_x2, t2_y1, t2_y2, direct2, dist2, face2)
             t2_x2, t2_y2 = t2_x1, t2_y1
-            continue
+            b2 = True
 
-        if i%1000 == 0:
-            print(i)
+        if not b1:
+            face1 = direct1
+            t1_x2 ,t1_y2 = t1_x1, t1_y1
+        if not b2:
+            face2 = direct2
+            t2_x2 ,t2_y2 = t2_x1, t2_y1
         i+=1
 
     return i
 
-print(task8_stat())
+lst = list()
+for i in range(10000):
+    val = task8_stat()
+    print(val)
+    if val >= 999999:
+        lst.append(1000000)
+    else:
+        lst.append(val)
+
+ans="\n".join(lst)
+output_file = open("task8.txt", "w")
+output_file.write(ans)
+output_file.close()

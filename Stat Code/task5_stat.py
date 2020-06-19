@@ -1,7 +1,7 @@
-from matplotlib import pyplot as plt
+# from matplotlib import pyplot as plt
 import numpy as np
-import scipy.stats as stats
-import pylab as pl
+# import scipy.stats as stats
+# import pylab as pl
 import math
 
 def pm(x,y):
@@ -76,6 +76,9 @@ def task5_stat(n):
             t1_x1, t1_y1, face1 = Boundary_Handle(t1_x1, t1_x2, t1_y1, t1_y2, direct1, dist1, face1)
             t1_x2, t1_y2 = t1_x1, t1_y1
             continue
+
+        face1 = direct1
+        t1_x2 ,t1_y2 = t1_x1, t1_y1
         
         i+=1
 
@@ -86,15 +89,15 @@ for i in range(10000):
     lst.append (task5_stat(1000))
 
 
-lst = sorted(lst)
+# lst = sorted(lst)
 
-fit = stats.norm.pdf(lst, np.mean(lst), np.std(lst))  #this is a fitting indeed
+# fit = stats.norm.pdf(lst, np.mean(lst), np.std(lst))  #this is a fitting indeed
 
-pl.plot(lst,fit,'-o')
+# pl.plot(lst,fit,'-o')
 
-pl.hist(lst,normed=True)      #use this to draw histogram of your data
+# pl.hist(lst,normed=True)      #use this to draw histogram of your data
 
-pl.show()
+# pl.show()
 
 ans="\n".join(lst)
 output_file = open("task5.txt", "w")

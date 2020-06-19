@@ -38,7 +38,7 @@ lst = list()
 val = 0
 
 for i in range(10000):
-    val = task4(100, [1/3,1/3,1/3])
+    val = task4(100)
     lst.append(val)
 
 lst = sorted(lst)
