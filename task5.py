@@ -78,12 +78,12 @@ turtle.goto(0,-350)
 turtle.pendown()
 turtle.circle(350)
 turtle.penup()
-turtle.goto(345,0)
+turtle.goto(0,0)
 turtle.pendown()
 i = 0
 
 
-x2,y2 = 345,0
+x2,y2 = 0,0
 turtle.speed(0)
 while RUNNING:
     

@@ -22,22 +22,23 @@ def Boundary_Handle(x1,x2,y1,y2):
     if dr<=0:
         return
     print("x1:",x1,"x2:",x2,"y1:",y1,"y2:",y2,"\ndx:",dx,"\ndy:",dy,"\nD:",D)
-    #Intersection points of the vector and the circle
     _x, x_= tuple(w/dr**2 for w in pm(D*dy,(-1 if dy < 0 else 1)*dx*(math.sqrt((350**2) * (dr**2) - D**2))))
     _y, y_= tuple(w/dr**2 for w in pm(-D*dx, abs(dy)*(math.sqrt((350**2) * (dr**2) - D**2))))
     x,y = close_to_circle(_x,x_,_y,y_)
-    #if point already on circle reflect on the surface
     if (x,y) == (x2,y2):         
+        dist = 3.5 * (np.random.random_sample())
         move(dist,turn=(math.pi-direct)*180/math.pi)
-    
+        s = math.sqrt(turtle.position()[0]**2 + turtle.position()[1]**2)
+        print(s)
+        if s>=350:
+            return
+        return
     vec_to = (x-x2,y-y2)
     angle = math.acos((vec_to[0]*x+vec_to[1]*y)/(math.sqrt(vec_to[0]**2+vec_to[1]**2)*math.sqrt(x**2+y**2)))
     turtle.seth(direct*180/math.pi)
     turtle.setpos(x,y)
-    dist = 1.75 * (np.random.random_sample()//(1/3))
-    if math.sqrt((x+dist*math.cos(math.pi-2*angle))**2 + (y+dist*math.sin(math.pi-2*angle))**2) == 350:
-        move(dist,turn=(math.pi-direct)*180/math.pi)
-    elif math.sqrt((x+dist*math.cos(math.pi-2*angle))**2 + (y+dist*math.sin(math.pi-2*angle))**2) > 350:
+    dist = 3.5 * (np.random.random_sample())
+    if math.sqrt((x+dist*math.cos(math.pi-2*angle))**2 + (y+dist*math.sin(math.pi-2*angle))**2) >= 350:
         Boundary_Handle(x+dist*math.cos(math.pi-2*angle),x,y+dist*math.sin(math.pi-2*angle),y)
     else:
         move(dist,turn=(math.pi-2*angle)*180/math.pi)
@@ -72,7 +73,6 @@ root.protocol("WM_DELETE_WINDOW", on_close)
 
 RUNNING = True
 
-turtle.speed(0)
 turtle.penup()
 turtle.goto(0,-350)
 turtle.pendown()
@@ -84,11 +84,12 @@ i = 0
 
 
 x2,y2 = 0,0
+turtle.speed(0)
 while RUNNING:
     
     i+=1
 
-    direct = (np.random.random_sample()*4//1)*math.pi*0.5
+    direct = 2 * math.pi * np.random.random_sample()
     dist = 1.75 * (np.random.random_sample()//(1/3))
     x1,y1 = x2+dist*math.cos(direct),y2+dist*math.sin(direct)
     
@@ -101,7 +102,8 @@ while RUNNING:
         
     turtle.seth(direct*180/math.pi)
     turtle.forward(dist)
+    if i % 500 == 0:
+        print(i)
     if i == 1000:
         break
     x2,y2 = x1,y1
-    
