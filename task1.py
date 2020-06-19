@@ -1,4 +1,7 @@
+from matplotlib import pyplot as plt
 import numpy as np
+import scipy.stats as stats
+import pylab as pl
 import turtle
 import math
 
@@ -25,12 +28,28 @@ def task1(n, p):
     Returns:
     The displacement after n steps as an integer.
     """
+    turtle.goto(0,0)
     i=0
     while i<n and RUNNING:
-        dist = 3.5 * (np.random.choice([-1,0,1]))
-        print(dist)
+        dist = (np.random.choice([-1,0,1]))
         turtle.forward(dist)
         i+=1 
     return turtle.pos()[0]
 
-print(task1(10000,[1/3,1/3,1/3]))
+lst = list()
+val = 0
+
+for i in range(10000):
+    val = task1(1000, [1/3,1/3,1/3])
+    lst.append(val)
+
+
+lst = sorted(lst)
+
+fit = stats.norm.pdf(lst, np.mean(lst), np.std(lst))  #this is a fitting indeed
+
+pl.plot(lst,fit,'-o')
+
+pl.hist(lst,normed=True)      #use this to draw histogram of your data
+
+pl.show()

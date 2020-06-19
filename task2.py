@@ -52,5 +52,9 @@ def task2(x, p1, p2):
     return i
 
 p = [0.33, 0.33, 0.34]
-for i in range(10):
-    print(task2(100, p, p))
+lst = list()
+
+for i in range(10000):
+    val = task2(100, p, p))
+    lst.append(val)
+

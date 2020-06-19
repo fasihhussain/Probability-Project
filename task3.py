@@ -68,6 +68,7 @@ root.protocol("WM_DELETE_WINDOW", on_close)
 
 RUNNING = True
 
+turtle.speed(0)
 turtle.penup()
 turtle.goto(0,-350)
 turtle.pendown()
@@ -79,7 +80,6 @@ i = 0
 
 
 x2,y2 = 345,0
-turtle.speed(0)
 while RUNNING:
     
     i+=1
