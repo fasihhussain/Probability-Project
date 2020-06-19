@@ -1,5 +1,9 @@
-import math
+from matplotlib import pyplot as plt
 import numpy as np
+import scipy.stats as stats
+import pylab as pl
+import math
+
 
 def Boundary_Handle(x1,x2,y1,y2, direct, dist,face):
     dx = x2 - x1

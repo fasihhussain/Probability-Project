@@ -48,7 +48,7 @@ def close_to_circle(t1, t2, s1, s2, x2, y2):
 
 
 
-def task3_stat(n):
+def task5_stat(n):
     circle_r = 350
     # center of the circle (x, y)
     circle_x = 0
@@ -65,8 +65,9 @@ def task3_stat(n):
 
     while i<n:
 
-        direct1 = (np.random.random_sample()*4//1)*math.pi*0.5
-        dist = 1.75 * (np.random.random_sample()//(1/3))
+        direct1 = np.random.random_sample()*2*math.pi
+
+        dist1 = 3.5 * np.random.random_sample()
 
         t1_x1, t1_y1 = t1_x2 + dist1*math.cos(direct1), t1_y2 + dist1*math.sin(direct1)
 
@@ -84,7 +85,7 @@ def task3_stat(n):
 
 lst= list()
 for i in range(10000):
-    lst.append (task3_stat(1000))
+    lst.append (task5_stat(1000))
 
 
 lst = sorted(lst)
@@ -98,6 +99,6 @@ pl.hist(lst,normed=True)      #use this to draw histogram of your data
 pl.show()
 
 ans="\n".join(lst)
-output_file = open("task3.txt", "w")
+output_file = open("task5.txt", "w")
 output_file.write(ans)
 output_file.close()
