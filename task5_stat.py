@@ -4,7 +4,6 @@ import scipy.stats as stats
 import pylab as pl
 import math
 
-
 def Boundary_Handle(x1,x2,y1,y2, direct, dist,face):
     dx = x2 - x1
     dy = y2 - y1
@@ -49,59 +48,57 @@ def close_to_circle(t1, t2, s1, s2, x2, y2):
 
 
 
-def task8_stat():
+def task5_stat(n):
     circle_r = 350
     # center of the circle (x, y)
     circle_x = 0
     circle_y = 0
 
     # random angle
-    alpha1 = 2 * math.pi * np.random.random_sample()
-    alpha2 = 2 * math.pi * np.random.random_sample()
-    # random radius
-    r1 = circle_r * math.sqrt(np.random.random_sample())
-    r2 = circle_r * math.sqrt(np.random.random_sample())
 
-    t1_x2 = r1 * math.cos(alpha1) + circle_x
-    t1_y2 = r1 * math.sin(alpha1) + circle_y
-
-    t2_x2 = r2 * math.cos(alpha2) + circle_x
-    t2_y2 = r2 * math.sin(alpha2) + circle_y
+    t1_x2 = 0 
+    t1_y2 = 0
 
     face1 = 0
-    face2 = 0
 
     i=0
 
-    while abs(math.sqrt((t1_x2 - t2_x2)**2 + (t1_y2 - t2_y2)**2)) > 3.5:
+    while i<n:
 
         direct1 = np.random.random_sample()*2*math.pi
-        direct2 = np.random.random_sample()*2*math.pi
 
         dist1 = 3.5 * np.random.random_sample()
-        dist2 = 3.5 * np.random.random_sample()
 
         t1_x1, t1_y1 = t1_x2 + dist1*math.cos(direct1), t1_y2 + dist1*math.sin(direct1)
-        t2_x1, t2_y1 = t2_x2 + dist2*math.cos(direct2), t2_y2 + dist2*math.sin(direct2)
 
         if math.sqrt((t1_x2 - t1_x1)**2 + (t1_y2 - t1_y1)**2) == 0:
-            continue
-        if math.sqrt((t2_x2 - t2_x1)**2 + (t2_y2 - t2_y1)**2) == 0:
             continue
 
         if math.sqrt(t1_x1**2 + t1_y1**2) >= 350:
             t1_x1, t1_y1, face1 = Boundary_Handle(t1_x1, t1_x2, t1_y1, t1_y2, direct1, dist1, face1)
             t1_x2, t1_y2 = t1_x1, t1_y1
             continue
-        if math.sqrt(t2_x1**2 + t2_y1**2) >= 350:
-            t2_x1, t2_y1, face2 = Boundary_Handle(t2_x1, t2_x2, t2_y1, t2_y2, direct2, dist2, face2)
-            t2_x2, t2_y2 = t2_x1, t2_y1
-            continue
-
-        if i%1000 == 0:
-            print(i)
+        
         i+=1
 
-    return i
+    return math.sqrt(t1_x2**2 + t1_y2**2)
 
-print(task8_stat())
+lst= list()
+for i in range(10000):
+    lst.append (task5_stat(1000))
+
+
+lst = sorted(lst)
+
+fit = stats.norm.pdf(lst, np.mean(lst), np.std(lst))  #this is a fitting indeed
+
+pl.plot(lst,fit,'-o')
+
+pl.hist(lst,normed=True)      #use this to draw histogram of your data
+
+pl.show()
+
+ans="\n".join(lst)
+output_file = open("task5.txt", "w")
+output_file.write(ans)
+output_file.close()

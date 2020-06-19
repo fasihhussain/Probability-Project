@@ -18,34 +18,39 @@ def Boundary_Handle(turtle,x1,x2,y1,y2, direct, dist):
     dy = y2 - y1
     dr = math.sqrt(dx**2 + dy**2)
     D = x1*y2 - x2*y1
-    if dr <= 0:
-        return
-    print("Boundary")
-    print("x1,x2,y1,y2",x1,x2,y1,y2)
-    print("detr =",(350**2) * (dr**2) - D**2)
-    print("dr, D", dr,D)
+    if dr == 0:
+        return x2,y2,face
+    # print("Boundary")
+    # print("x1,x2,y1,y2",x1,x2,y1,y2)
+    # print("detr =",(350**2) * (dr**2) - D**2)
+    # print("dr, D", dr,D)
     _x, x_= tuple(w/dr**2 for w in pm(D*dy,(-1 if dy < 0 else 1)*dx*(math.sqrt((350**2) * (dr**2) - D**2))))
     _y, y_= tuple(w/dr**2 for w in pm(-D*dx, abs(dy)*(math.sqrt((350**2) * (dr**2) - D**2))))
     x,y = close_to_circle(_x,x_,_y,y_, x2, y2)
     if (x,y) == (x2,y2):         
         dist = 3.5 * np.random.random_sample()
-        print(dist,direct)
+        # print(dist,direct)
+        print("Point on Circle")
         move(turtle, dist,turn=(math.pi-direct)*180/math.pi)
         return
     vec_to = (x-x2,y-y2)
     angle = math.acos((vec_to[0]*x+vec_to[1]*y)/(math.sqrt(vec_to[0]**2+vec_to[1]**2)*math.sqrt(x**2+y**2)))
-    print(angle)
+    # print(angle)
     turtle.seth(direct*180/math.pi)
     turtle.setpos(x,y)
-    print(x,y)
+    # print(x,y)
     dist = 3.5 * np.random.random_sample()
-    if math.sqrt((x+dist*math.cos(math.pi-2*angle))**2 + (y+dist*math.sin(math.pi-2*angle))**2) >= 350:
+    if math.sqrt((x+dist*math.cos(math.pi-2*angle))**2 + (y+dist*math.sin(math.pi-2*angle))**2) == 350:
+        move(turtle, dist,turn=(math.pi-direct)*180/math.pi)
+        print("Point on circle 2")
+    elif math.sqrt((x+dist*math.cos(math.pi-2*angle))**2 + (y+dist*math.sin(math.pi-2*angle))**2) > 350:
+        print("Point outside circle")
         Boundary_Handle(turtle, x + dist*math.cos(math.pi-2*angle),x,y+dist*math.sin(math.pi-2*angle),y, direct, dist)
     else:
         move(turtle, dist,turn=(math.pi-2*angle)*180/math.pi)
         x2,y2 = turtle.position()
 
-    print(turtle.position(),math.sqrt(x2**2+y2**2))
+    # print(turtle.position(),math.sqrt(x2**2+y2**2))
 
 def close_to_circle(t1, t2, s1, s2, x2, y2):
     dis1 = math.sqrt((t1-x2)**2+(s1-y2)**2)
@@ -107,22 +112,22 @@ alpha2 = 2 * math.pi * np.random.random_sample()
 r1 = circle_r * math.sqrt(np.random.random_sample())
 r2 = circle_r * math.sqrt(np.random.random_sample())
 # calculating coordinates
-t1.goto(r * math.cos(alpha1) + circle_x, r1 * math.sin(alpha1) + circle_y)
+t1.goto(r1 * math.cos(alpha1) + circle_x, r1 * math.sin(alpha1) + circle_y)
 
 t2.penup()
 
-t2.goto(r * math.cos(alpha2) + circle_x, r2 * math.sin(alpha2) + circle_y)
+t2.goto(r1 * math.cos(alpha2) + circle_x, r2 * math.sin(alpha2) + circle_y)
 
 t1.pendown()
 t2.pendown()
 
 i = 0
 
-t1_x2 = r * math.cos(alpha1) + circle_x
-t1_y2 = r * math.sin(alpha1) + circle_y
+t1_x2 = r1 * math.cos(alpha1) + circle_x
+t1_y2 = r1 * math.sin(alpha1) + circle_y
 
-t2_x2 = r * math.cos(alpha2) + circle_x
-t2_y2 = r * math.sin(alpha2) + circle_y
+t2_x2 = r2 * math.cos(alpha2) + circle_x
+t2_y2 = r2 * math.sin(alpha2) + circle_y
 
 while RUNNING:
     
@@ -153,13 +158,13 @@ while RUNNING:
 
     move(t1, dist1, angle = direct1*180/math.pi)
     move(t2, dist2, angle = direct2*180/math.pi)
-    
-    if i == 10000 or abs(math.sqrt((t1_x1 - t2_x1)**2 + (t1_y1 - t2_y1)**2)) < 3.5:
+    print(math.sqrt((t1_x1 - t2_x1)**2 + (t1_y1 - t2_y1)**2))
+    if i == 10000 or math.sqrt((t1_x1 - t2_x1)**2 + (t1_y1 - t2_y1)**2) <= 3.5:
         break
 
     t1_x2, t1_y2 = t1_x1, t1_y1
     t2_x2, t2_y2 = t2_x1, t2_y1
     
-print(t1.position())
+# print(t1.position())
 
 # turtle.exitonclick()
