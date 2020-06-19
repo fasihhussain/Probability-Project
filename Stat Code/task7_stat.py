@@ -12,12 +12,8 @@ def Boundary_Handle(x1,x2,y1,y2, direct, dist,face):
     dy = y2 - y1
     dr = math.sqrt(dx**2 + dy**2)
     D = x1*y2 - x2*y1
-    if dr == 0:
-        return x2,y2,face
-    if math.sqrt(x2**2+y2**2) > 350:
-        x2,y2 = x2+dist*math.cos(math.pi - face),y2+ dist*(math.pi - face)
-        face = math.pi-face
-        return x2, y2, face
+    if dr <= 0:
+        return
     _x, x_= tuple(w/dr**2 for w in pm(D*dy,(-1 if dy < 0 else 1)*dx*(math.sqrt((350**2) * (dr**2) - D**2))))
     _y, y_= tuple(w/dr**2 for w in pm(-D*dx, abs(dy)*(math.sqrt((350**2) * (dr**2) - D**2))))
     x,y = close_to_circle(_x,x_,_y,y_, x2, y2)
@@ -32,7 +28,7 @@ def Boundary_Handle(x1,x2,y1,y2, direct, dist,face):
     if math.sqrt((x+dist*math.cos(math.pi-2*angle))**2 + (y+dist*math.sin(math.pi-2*angle))**2) == 350:
         x2,y2 = x2 + dist*math.cos(math.pi - direct), y2 + dist*math.cos(math.pi-direct)
     if math.sqrt((x+dist*math.cos(math.pi-2*angle))**2 + (y+dist*math.sin(math.pi-2*angle))**2) >= 350:
-        return Boundary_Handle( x + dist*math.cos(math.pi-2*angle),x,y+dist*math.sin(math.pi-2*angle),y, direct, dist,face)
+        return Boundary_Handle(x + dist*math.cos(math.pi-2*angle),x,y+dist*math.sin(math.pi-2*angle),y, direct, dist,face)
     else:
         x2,y2 = x2+dist*math.cos(face + math.pi-2*angle),y2+ dist*(face + math.pi-2*angle)
         face =face + math.pi-2*angle
@@ -55,78 +51,56 @@ def close_to_circle(t1, t2, s1, s2, x2, y2):
 
 
 
-def task8_stat():
-    circle_r = 350
-    # center of the circle (x, y)
-    circle_x = 0
-    circle_y = 0
+def task3_stat(n):
+
 
     # random angle
-    alpha1 = 2 * math.pi * np.random.random_sample()
-    alpha2 = 2 * math.pi * np.random.random_sample()
-    # random radius
-    r1 = circle_r * math.sqrt(np.random.random_sample())
-    r2 = circle_r * math.sqrt(np.random.random_sample())
 
-    t1_x2 = r1 * math.cos(alpha1) + circle_x
-    t1_y2 = r1 * math.sin(alpha1) + circle_y
-
-    t2_x2 = r2 * math.cos(alpha2) + circle_x
-    t2_y2 = r2 * math.sin(alpha2) + circle_y
+    t1_x2 = 0 
+    t1_y2 = 0
 
     face1 = 0
-    face2 = 0
 
     i=0
 
-    while abs(math.sqrt((t1_x2 - t2_x2)**2 + (t1_y2 - t2_y2)**2)) > 3.5 and i<1000000:
+    while i<n:
 
         direct1 = np.random.random_sample()*2*math.pi
-        direct2 = np.random.random_sample()*2*math.pi
-
-        dist1 = 3.5 * np.random.random_sample()
-        dist2 = 3.5 * np.random.random_sample()
+        dist1 = 1.75 * (np.random.random_sample()//(1/3))
 
         t1_x1, t1_y1 = t1_x2 + dist1*math.cos(direct1), t1_y2 + dist1*math.sin(direct1)
-        t2_x1, t2_y1 = t2_x2 + dist2*math.cos(direct2), t2_y2 + dist2*math.sin(direct2)
-
-        b1 = False
-        b2 = False
 
         if math.sqrt((t1_x2 - t1_x1)**2 + (t1_y2 - t1_y1)**2) == 0:
-            b1 = True 
-        if math.sqrt((t2_x2 - t2_x1)**2 + (t2_y2 - t2_y1)**2) == 0:
-            b2 = True
+            continue
 
-        if math.sqrt(t1_x1**2 + t1_y1**2) >= 350 and not b1:
+        if math.sqrt(t1_x1**2 + t1_y1**2) >= 350:
             t1_x1, t1_y1, face1 = Boundary_Handle(t1_x1, t1_x2, t1_y1, t1_y2, direct1, dist1, face1)
             t1_x2, t1_y2 = t1_x1, t1_y1
-            b1 = True
-        if math.sqrt(t2_x1**2 + t2_y1**2) >= 350 and not b2:
-            t2_x1, t2_y1, face2 = Boundary_Handle(t2_x1, t2_x2, t2_y1, t2_y2, direct2, dist2, face2)
-            t2_x2, t2_y2 = t2_x1, t2_y1
-            b2 = True
+            continue
+        
+        face1 = direct1
+        t1_x2 ,t1_y2 = t1_x1, t1_y1
 
-        if not b1:
-            face1 = direct1
-            t1_x2 ,t1_y2 = t1_x1, t1_y1
-        if not b2:
-            face2 = direct2
-            t2_x2 ,t2_y2 = t2_x1, t2_y1
         i+=1
 
-    return i
+    return math.sqrt(t1_x2**2 + t1_y2**2)
 
-lst = list()
+lst= list()
 for i in range(10000):
-    val = task8_stat()
-    print(val)
-    if val >= 999999:
-        lst.append(1000000)
-    else:
-        lst.append(val)
+    lst.append (task3_stat(1000))
+
+
+# lst = sorted(lst)
+
+# fit = stats.norm.pdf(lst, np.mean(lst), np.std(lst))  #this is a fitting indeed
+
+# pl.plot(lst,fit,'-o')
+
+# pl.hist(lst,normed=True)      #use this to draw histogram of your data
+
+# pl.show()
 
 ans="\n".join(lst)
-output_file = open("task8.txt", "w")
+output_file = open("task7.txt", "w")
 output_file.write(ans)
 output_file.close()

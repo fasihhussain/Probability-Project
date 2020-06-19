@@ -55,6 +55,6 @@ p = [0.33, 0.33, 0.34]
 lst = list()
 
 for i in range(10000):
-    val = task2(100, p, p))
+    val = task2(100, p, p)
     lst.append(val)
 

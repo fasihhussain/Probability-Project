@@ -19,7 +19,11 @@ def Boundary_Handle(turtle,x1,x2,y1,y2, direct, dist):
     dr = math.sqrt(dx**2 + dy**2)
     D = x1*y2 - x2*y1
     if dr == 0:
-        return x2,y2,face
+        return 
+    if math.sqrt(x2**2+y2**2) > 350:
+        x2,y2 = x2+dist*math.cos(math.pi - turtle.heading()/180*2*math.pi),y2+ dist*(math.pi - turtle.heading()/180*2*math.pi)
+        turtle.seth (math.pi- turtle.heading()/180*2*math.pi)
+        return 
     # print("Boundary")
     # print("x1,x2,y1,y2",x1,x2,y1,y2)
     # print("detr =",(350**2) * (dr**2) - D**2)
@@ -142,28 +146,33 @@ while RUNNING:
     t1_x1, t1_y1 = t1_x2 + dist1*math.cos(direct1), t1_y2 + dist1*math.sin(direct1)
     t2_x1, t2_y1 = t2_x2 + dist2*math.cos(direct2), t2_y2 + dist2*math.sin(direct2)
 
-    if math.sqrt((t1_x2 - t1_x1)**2 + (t1_y2 - t1_y1)**2) == 0:
-        continue
-    if math.sqrt((t2_x2 - t2_x1)**2 + (t2_y2 - t2_y1)**2) == 0:
-        continue
+    b1 = False
+    b2 = False
 
-    if math.sqrt(t1_x1**2 + t1_y1**2) >= 350:
+    if math.sqrt((t1_x2 - t1_x1)**2 + (t1_y2 - t1_y1)**2) == 0:
+        b1 = True
+    if math.sqrt((t2_x2 - t2_x1)**2 + (t2_y2 - t2_y1)**2) == 0:
+        b2 = True
+
+    if math.sqrt(t1_x1**2 + t1_y1**2) >= 350 and not b1:
         Boundary_Handle(t1, t1_x1, t1_x2, t1_y1, t1_y2, direct1, dist1)
         t1_x2, t1_y2 = t1.position()
-        continue
-    if math.sqrt(t2_x1**2 + t2_y1**2) >= 350:
+        b1 = True
+    if math.sqrt(t2_x1**2 + t2_y1**2) >= 350 and not b2:
         Boundary_Handle(t2, t2_x1, t2_x2, t2_y1, t2_y2, direct2, dist2)
         t2_x2, t2_y2 = t2.position()
-        continue
+        b2 = True
 
-    move(t1, dist1, angle = direct1*180/math.pi)
-    move(t2, dist2, angle = direct2*180/math.pi)
+    if not b1:
+        move(t1, dist1, angle = direct1*180/math.pi)
+        t1_x2, t1_y2 = t1_x1, t1_y1
+    if not b2:    
+        move(t2, dist2, angle = direct2*180/math.pi)
+        t2_x2, t2_y2 = t2_x1, t2_y1
     print(math.sqrt((t1_x1 - t2_x1)**2 + (t1_y1 - t2_y1)**2))
     if i == 10000 or math.sqrt((t1_x1 - t2_x1)**2 + (t1_y1 - t2_y1)**2) <= 3.5:
         break
-
-    t1_x2, t1_y2 = t1_x1, t1_y1
-    t2_x2, t2_y2 = t2_x1, t2_y1
+    
     
 # print(t1.position())
 

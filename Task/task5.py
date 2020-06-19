@@ -28,10 +28,6 @@ def Boundary_Handle(x1,x2,y1,y2):
     if (x,y) == (x2,y2):         
         dist = 3.5 * (np.random.random_sample())
         move(dist,turn=(math.pi-direct)*180/math.pi)
-        s = math.sqrt(turtle.position()[0]**2 + turtle.position()[1]**2)
-        print(s)
-        if s>=350:
-            return
         return
     vec_to = (x-x2,y-y2)
     angle = math.acos((vec_to[0]*x+vec_to[1]*y)/(math.sqrt(vec_to[0]**2+vec_to[1]**2)*math.sqrt(x**2+y**2)))
@@ -73,18 +69,18 @@ root.protocol("WM_DELETE_WINDOW", on_close)
 
 RUNNING = True
 
+turtle.speed(0)
 turtle.penup()
 turtle.goto(0,-350)
 turtle.pendown()
 turtle.circle(350)
 turtle.penup()
-turtle.goto(0,0)
+turtle.goto(345,0)
 turtle.pendown()
 i = 0
 
 
-x2,y2 = 0,0
-turtle.speed(0)
+x2,y2 = 345,0
 while RUNNING:
     
     i+=1
