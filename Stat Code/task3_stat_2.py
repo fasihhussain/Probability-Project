@@ -1,9 +1,13 @@
-from matplotlib import pyplot as plt
+# from matplotlib import pyplot as plt
 import numpy as np
-import scipy.stats as stats
-import pylab as pl
+# import scipy.stats as stats
+# import pylab as pl
 import math
-output_file = open("C:\\Users\\Fasih Hussain\\Documents\GitHub\\Probability-Project\\Results\\task3.txt", "w")
+
+
+def pm(x,y):
+    return (x+y,x-y)
+
 def Boundary_Handle(x1,x2,y1,y2, direct, dist,face):
     dx = x2 - x1
     dy = y2 - y1
@@ -25,7 +29,7 @@ def Boundary_Handle(x1,x2,y1,y2, direct, dist,face):
     if math.sqrt((x+dist*math.cos(math.pi-2*angle))**2 + (y+dist*math.sin(math.pi-2*angle))**2) == 350:
         x2,y2 = x2 + dist*math.cos(math.pi - direct), y2 + dist*math.cos(math.pi-direct)
     if math.sqrt((x+dist*math.cos(math.pi-2*angle))**2 + (y+dist*math.sin(math.pi-2*angle))**2) >= 350:
-        return Boundary_Handle(x + dist*math.cos(math.pi-2*angle),x,y+dist*math.sin(math.pi-2*angle),y, direct, dist)
+        return Boundary_Handle(x + dist*math.cos(math.pi-2*angle),x,y+dist*math.sin(math.pi-2*angle),y, direct, dist,face)
     else:
         x2,y2 = x2+dist*math.cos(face + math.pi-2*angle),y2+ dist*(face + math.pi-2*angle)
         face =face + math.pi-2*angle
@@ -49,10 +53,6 @@ def close_to_circle(t1, t2, s1, s2, x2, y2):
 
 
 def task3_stat(n):
-    circle_r = 350
-    # center of the circle (x, y)
-    circle_x = 0
-    circle_y = 0
 
     # random angle
 
@@ -64,7 +64,7 @@ def task3_stat(n):
     i=0
 
     while i<n:
-
+        # print(i)
         direct1 = (np.random.random_sample()*4//1)*math.pi*0.5
         dist1 = 1.75 * (np.random.random_sample()//(1/3))
 
@@ -78,16 +78,19 @@ def task3_stat(n):
             t1_x2, t1_y2 = t1_x1, t1_y1
             continue
         
+        face = direct1
+        t1_x2 ,t1_y2 = t1_x1, t1_y1
+        
         i+=1
 
     return math.sqrt(t1_x2**2 + t1_y2**2)
 
 lst= list()
 for i in range(10000):
-    lst.append (task3_stat(1000))
+    val = task3_stat(1000)
+    lst.append(val)
 
-
-lst = sorted(lst)
+# lst = sorted(lst)
 
 # fit = stats.norm.pdf(lst, np.mean(lst), np.std(lst))  #this is a fitting indeed
 
@@ -99,6 +102,6 @@ lst = sorted(lst)
 for x in range(len(lst)):
     lst[x]=str(lst[x])
 ans="\n".join(lst)
-
+output_file = open("C:\\Users\\Fasih Hussain\\Documents\GitHub\\Probability-Project\\Results\\task3.txt", "w")
 output_file.write(ans)
 output_file.close()
