@@ -101,16 +101,17 @@ circle_x = 0
 circle_y = 0
 
 # random angle
-alpha1 = 2 * math.pi * random.random()
-alpha2 = 2 * math.pi * random.random()
+alpha1 = 2 * math.pi * np.random.random_sample()
+alpha2 = 2 * math.pi * np.random.random_sample()
 # random radius
-r = circle_r * math.sqrt(random.random())
+r1 = circle_r * math.sqrt(np.random.random_sample())
+r2 = circle_r * math.sqrt(np.random.random_sample())
 # calculating coordinates
-t1.goto(r * math.cos(alpha1) + circle_x, r * math.sin(alpha1) + circle_y)
+t1.goto(r * math.cos(alpha1) + circle_x, r1 * math.sin(alpha1) + circle_y)
 
 t2.penup()
 
-t2.goto(r * math.cos(alpha2) + circle_x, r * math.sin(alpha2) + circle_y)
+t2.goto(r * math.cos(alpha2) + circle_x, r2 * math.sin(alpha2) + circle_y)
 
 t1.pendown()
 t2.pendown()

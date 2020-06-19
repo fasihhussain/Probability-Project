@@ -26,7 +26,7 @@ def Boundary_Handle(x1,x2,y1,y2):
     _y, y_= tuple(w/dr**2 for w in pm(-D*dx, abs(dy)*(math.sqrt((350**2) * (dr**2) - D**2))))
     x,y = close_to_circle(_x,x_,_y,y_)
     if (x,y) == (x2,y2):         
-        dist = 1.75 * (np.random.random_sample()//(1/3))
+        dist = 3.5 * (np.random.random_sample())
         move(dist,turn=(math.pi-direct)*180/math.pi)
         s = math.sqrt(turtle.position()[0]**2 + turtle.position()[1]**2)
         print(s)
@@ -37,7 +37,7 @@ def Boundary_Handle(x1,x2,y1,y2):
     angle = math.acos((vec_to[0]*x+vec_to[1]*y)/(math.sqrt(vec_to[0]**2+vec_to[1]**2)*math.sqrt(x**2+y**2)))
     turtle.seth(direct*180/math.pi)
     turtle.setpos(x,y)
-    dist = 1.75 * (np.random.random_sample()//(1/3))
+    dist = 3.5 * (np.random.random_sample())
     if math.sqrt((x+dist*math.cos(math.pi-2*angle))**2 + (y+dist*math.sin(math.pi-2*angle))**2) >= 350:
         Boundary_Handle(x+dist*math.cos(math.pi-2*angle),x,y+dist*math.sin(math.pi-2*angle),y)
     else:

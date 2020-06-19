@@ -22,12 +22,14 @@ def Boundary_Handle(x1,x2,y1,y2):
     if dr<=0:
         return
     print("x1:",x1,"x2:",x2,"y1:",y1,"y2:",y2,"\ndx:",dx,"\ndy:",dy,"\nD:",D)
+    #Intersection points of the vector and the circle
     _x, x_= tuple(w/dr**2 for w in pm(D*dy,(-1 if dy < 0 else 1)*dx*(math.sqrt((350**2) * (dr**2) - D**2))))
     _y, y_= tuple(w/dr**2 for w in pm(-D*dx, abs(dy)*(math.sqrt((350**2) * (dr**2) - D**2))))
     x,y = close_to_circle(_x,x_,_y,y_)
+    #if point already on circle reflect on the surface
     if (x,y) == (x2,y2):         
-        dist = 1.75 * (np.random.random_sample()//(1/3))
         move(dist,turn=(math.pi-direct)*180/math.pi)
+    
     vec_to = (x-x2,y-y2)
     angle = math.acos((vec_to[0]*x+vec_to[1]*y)/(math.sqrt(vec_to[0]**2+vec_to[1]**2)*math.sqrt(x**2+y**2)))
     turtle.seth(direct*180/math.pi)
