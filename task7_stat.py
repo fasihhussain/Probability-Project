@@ -4,7 +4,6 @@ import scipy.stats as stats
 import pylab as pl
 import math
 
-
 def pm(x,y):
     return (x+y,x-y)
 
@@ -54,6 +53,7 @@ def close_to_circle(t1, t2, s1, s2, x2, y2):
 
 def task3_stat(n):
 
+
     # random angle
 
     t1_x2 = 0 
@@ -65,7 +65,7 @@ def task3_stat(n):
 
     while i<n:
 
-        direct1 = (np.random.random_sample()*4//1)*math.pi*0.5
+        direct1 = np.random.random_sample()*2*math.pi
         dist1 = 1.75 * (np.random.random_sample()//(1/3))
 
         t1_x1, t1_y1 = t1_x2 + dist1*math.cos(direct1), t1_y2 + dist1*math.sin(direct1)

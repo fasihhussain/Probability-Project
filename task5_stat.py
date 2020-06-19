@@ -4,6 +4,9 @@ import scipy.stats as stats
 import pylab as pl
 import math
 
+def pm(x,y):
+    return (x+y,x-y)
+
 def Boundary_Handle(x1,x2,y1,y2, direct, dist,face):
     dx = x2 - x1
     dy = y2 - y1
@@ -25,7 +28,7 @@ def Boundary_Handle(x1,x2,y1,y2, direct, dist,face):
     if math.sqrt((x+dist*math.cos(math.pi-2*angle))**2 + (y+dist*math.sin(math.pi-2*angle))**2) == 350:
         x2,y2 = x2 + dist*math.cos(math.pi - direct), y2 + dist*math.cos(math.pi-direct)
     if math.sqrt((x+dist*math.cos(math.pi-2*angle))**2 + (y+dist*math.sin(math.pi-2*angle))**2) >= 350:
-        return Boundary_Handle(turtle, x + dist*math.cos(math.pi-2*angle),x,y+dist*math.sin(math.pi-2*angle),y, direct, dist)
+        return Boundary_Handle(x + dist*math.cos(math.pi-2*angle),x,y+dist*math.sin(math.pi-2*angle),y, direct, dist,face)
     else:
         x2,y2 = x2+dist*math.cos(face + math.pi-2*angle),y2+ dist*(face + math.pi-2*angle)
         face =face + math.pi-2*angle
@@ -49,12 +52,7 @@ def close_to_circle(t1, t2, s1, s2, x2, y2):
 
 
 def task5_stat(n):
-    circle_r = 350
-    # center of the circle (x, y)
-    circle_x = 0
-    circle_y = 0
 
-    # random angle
 
     t1_x2 = 0 
     t1_y2 = 0
