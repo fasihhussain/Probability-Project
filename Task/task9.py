@@ -14,14 +14,17 @@ root.protocol("WM_DELETE_WINDOW", on_close)
 
 RUNNING = True
 
-sop = True
+sop = False
 first_node = True
 nodes = True
 i = 0
 lst = []
+healthy = []
+immune = []
 while nodes:
 
     lst.insert(0, turtle.Turtle())
+    healthy.insert(0, lst[0])
     lst[0].shape('circle')
     lst[0].resizemode("user")
     lst[0].shapesize(0.2,0.2,1)
@@ -56,7 +59,8 @@ while nodes:
 sick = []
 rand_node = np.random.random_integers(0, len(lst)-1)
 lst[rand_node].color('red')
-sick.append(lst[rand_node])
+sick.append((lst[rand_node], 0))
+healthy.pop(rand_node)
 
 
 while RUNNING:
@@ -72,14 +76,37 @@ while RUNNING:
         node.forward(dist)
         node.pendown()
 
-        x,y = node.pos()[0], node.pos()[1]
+        if node in healthy and node not in immune:
+            x,y = node.pos()[0], node.pos()[1]
 
-        for s in sick:
-            s_x, s_y = s.pos()[0], s.pos()[1]
-            if abs(math.sqrt((x - s_x)**2 + (y - s_y)**2)) <= 3.5:
-                node.color('red')
-                sick.append(node)
-                break
+            for s, t in sick:
+                s_x, s_y = s.pos()[0], s.pos()[1]
+                if abs(math.sqrt((x - s_x)**2 + (y - s_y)**2)) <= 3.5:
+                    node.color('red')
+                    sick.append((node, 0))
+                    healthy.remove(node)
+                    break
+
+    for s, t in sick:
+
+        i = sick.index((s,t))
+
+        if t >= 10:
+
+            mortality = np.random.random_integers(1, 100)
+
+            if mortality == 1 or mortality == 2:
+                s.hideturtle()
+                lst.remove(s)
+                sick.pop(i)
+
+            else:
+                s.color('blue')
+                sick.pop(i)
+                immune.append(s)
+
+        else:
+            sick[i] = (s, t+1)
 
     if i == 1000:
         break
